@@ -16,7 +16,7 @@ let buildMenu = (parentMenu, menuList) => {
 let buildAccessMenu = (parentMenu, menuList, userPermission) => {
     parentMenu.children = []
     let children = menuList.filter((item) => {
-        return item.parentId == parentMenu.id && (!item.functionCode|| userPermission.indexOf(item.functionCode) > -1)
+        return item.parentId == parentMenu.id && (!item.functionCode || userPermission.indexOf(item.functionCode) > -1)
     })
     //父级没有权限访问，子级也不能访问
     for (let menu of children) {
@@ -27,12 +27,12 @@ let buildAccessMenu = (parentMenu, menuList, userPermission) => {
 let checkAccssMenu = (accessMenuList, menuList) => {
     for (let item of accessMenuList) {
         if (item.children) {
-            checkAccssMenu(item.children,menuList)
+            checkAccssMenu(item.children, menuList)
         }
     }
     _.remove(accessMenuList, (item) => {
         return item.children.length == 0 && menuList.some(s => {
-            return s.parentId==item.id
+            return s.parentId == item.id
         })
     });
 }
@@ -96,7 +96,7 @@ let menuService = {
         let menuList = JSON.parse(JSON.stringify(db.value()))
         let menuWithChildren = []
         let menu = menuList.filter(s => {
-            return menuId==0||s.id == menuId
+            return (s.parentId == 0 && menuId == 0) || s.id == menuId
         })
         let forFn = (parentId) => {
             let children = menuList.filter(s => {
@@ -115,6 +115,7 @@ let menuService = {
                 forFn(m.id)
             }
         }
+
         return menuWithChildren
     },
     getMenuFunctions: async (menuId) => {
