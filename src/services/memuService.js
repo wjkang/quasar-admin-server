@@ -96,7 +96,7 @@ let menuService = {
         let menuList = JSON.parse(JSON.stringify(db.value()))
         let menuWithChildren = []
         let menu = menuList.filter(s => {
-            return s.id == menuId
+            return menuId==0||s.id == menuId
         })
         let forFn = (parentId) => {
             let children = menuList.filter(s => {
@@ -110,8 +110,10 @@ let menuService = {
             }
         }
         if (menu.length > 0) {
-            menuWithChildren.push(menu[0])
-            forFn(menu[0].id)
+            menuWithChildren.push(...menu)
+            for (let m of menu) {
+                forFn(m.id)
+            }
         }
         return menuWithChildren
     },
