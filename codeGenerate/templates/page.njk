@@ -163,6 +163,9 @@ class <$ model.Name $> extends React.PureComponent {
             editModalVisible: false
         });
     }
+    editModalOnOk = () => {
+        this.editContent.onOk()
+    }
     save<$ model.Name $> = async (data) => {
         let formData = { ...this.editFormData, ...data }
         try {
@@ -249,9 +252,11 @@ class <$ model.Name $> extends React.PureComponent {
                 />
                 <Modal
                     visible={this.state.editModalVisible}
+                    cancelText="关闭"
+                    okText="提交"
                     title={this.editFormData.id ? '编辑' : '新增'}
                     onCancel={this.editModalOnCancel}
-                    onOk={this.editContent.onOk}
+                    onOk={this.editModalOnOk}
                     destroyOnClose
                 >
                     <Edit<$ model.Name $>ModalContent

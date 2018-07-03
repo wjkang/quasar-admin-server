@@ -3,7 +3,7 @@ export default {
     ServerRootPath:'C:/quasar-admin-server',
 
     Web:true,
-    Server:true,
+    Server:false,
 
     //web
     PageRelativePath:'/src/pages/',
