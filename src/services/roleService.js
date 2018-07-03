@@ -103,7 +103,7 @@ module.exports = {
     savePermission: async (menuIds, roleId, permissions) => {
         let db = await model.init(permissionContext)
         for (let menuId of menuIds) {
-            await await db.remove({ moduleId: menuId, roleId: roleId }).write()
+            await db.remove({ moduleId: menuId, roleId: roleId }).write()
         }
         for (let permission of permissions) {
             await db.insert({
