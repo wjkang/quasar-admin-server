@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Popconfirm, Divider, Button, notification } from 'antd';
+import { Table, Popconfirm, Divider, Button, notification,Modal } from 'antd';
 import {
     get<$ model.Name $>PagedList,
     del<$ model.Name $>,
@@ -8,7 +8,7 @@ import {
 } from 'api';
 import SearchForm from '@/schema/SearchForm';
 import schema from '@/schema/<$ model.name $>';
-import Edit<$ model.Name $>Modal from './edit<$ model.Name $>Modal';
+import Edit<$ model.Name $>ModalContent from './edit<$ model.Name $>ModalContent';
 class <$ model.Name $> extends React.PureComponent {
     state = {
         tableFilter: {
@@ -247,17 +247,21 @@ class <$ model.Name $> extends React.PureComponent {
                     scroll={{ x: 768 }}
                     bordered
                 />
-                <Edit<$ model.Name $>Modal
+                <Modal
                     visible={this.state.editModalVisible}
                     title={this.editFormData.id ? '编辑' : '新增'}
                     onCancel={this.editModalOnCancel}
+                    onOk={this.editContent.onOk}
                     destroyOnClose
-
-                    schema={schema.editSchema}
-                    uiSchema={schema.editUiSchema}
-                    formData={this.editFormData}
-                    handFormSubmit={this.save<$ model.Name $>}
-                />
+                >
+                    <Edit<$ model.Name $>ModalContent
+                        ref={(instance) => { this.editContent = instance; }}
+                        schema={schema.editSchema}
+                        uiSchema={schema.editUiSchema}
+                        formData={this.editFormData}
+                        handFormSubmit={this.save<$ model.Name $>}
+                    />
+                </Modal>
             </div>
         );
     }

@@ -123,7 +123,7 @@ const BuildWeb = () => {
 
   gulp.src('codeGenerate/templates/editModal.njk')
     .pipe(nunjucksRender(nunjucksRenderConfig))
-    .pipe(rename('edit' + CodeGenerateConfig.model.Name + 'Modal.jsx'))
+    .pipe(rename('edit' + CodeGenerateConfig.model.Name + 'ModalContent.jsx'))
     .pipe(gulp.dest(ProjectRootPath + CodeGenerateConfig.config.PageRelativePath));
 }
 
