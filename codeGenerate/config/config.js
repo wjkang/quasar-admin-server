@@ -1,7 +1,11 @@
 export default {
     ProjectRootPath:'C:/react-antd-admin',
-    ServerRootPath:'C:/GitHubProject/quasar-admin-server',
-    //front
+    ServerRootPath:'C:/quasar-admin-server',
+
+    Web:true,
+    Server:true,
+
+    //web
     PageRelativePath:'/src/pages/',
     SchemaRelativePath:'/src/schema/',
     ApiRelativePath:'/src/services/',

@@ -87,6 +87,7 @@ gulp.task('default', ['ESlint', 'ESlint_nodemon'], function () {
   // console.log('ESlin检查完成')
 })
 
+
 const nunjucksRenderConfig = {
   path: 'codeGenerate/serverTemplates',
   data: {
@@ -106,11 +107,7 @@ const nunjucksRenderConfig = {
   ext: '.js'
 }
 
-const ProjectRootPath = CodeGenerateConfig.config.ProjectRootPath;
-const ServerProjectRootPath = CodeGenerateConfig.config.ServerRootPath;
-const Model=CodeGenerateConfig.model;
-
-gulp.task('code', function () {
+const BuildWeb = () => {
   gulp.src('codeGenerate/templates/schema/*.njk')
     .pipe(nunjucksRender(nunjucksRenderConfig))
     .pipe(gulp.dest(ProjectRootPath + CodeGenerateConfig.config.SchemaRelativePath + CodeGenerateConfig.model.name));
@@ -128,8 +125,9 @@ gulp.task('code', function () {
     .pipe(nunjucksRender(nunjucksRenderConfig))
     .pipe(rename('edit' + CodeGenerateConfig.model.Name + 'Modal.jsx'))
     .pipe(gulp.dest(ProjectRootPath + CodeGenerateConfig.config.PageRelativePath));
+}
 
-  //server
+const BuildServer = () => {
   gulp.src('codeGenerate/serverTemplates/route.njk')
     .pipe(nunjucksRender(nunjucksRenderConfig))
     .pipe(rename('main-routes.js'))
@@ -137,12 +135,28 @@ gulp.task('code', function () {
 
   gulp.src('codeGenerate/serverTemplates/controller.njk')
     .pipe(nunjucksRender(nunjucksRenderConfig))
-    .pipe(rename(Model.name+'.js'))
+    .pipe(rename(Model.name + '.js'))
     .pipe(gulp.dest(ServerProjectRootPath + CodeGenerateConfig.config.ControllerRelativePath));
 
-  return gulp.src('codeGenerate/serverTemplates/service.njk')
+  gulp.src('codeGenerate/serverTemplates/service.njk')
     .pipe(nunjucksRender(nunjucksRenderConfig))
-    .pipe(rename(Model.name+'Service.js'))
+    .pipe(rename(Model.name + 'Service.js'))
     .pipe(gulp.dest(ServerProjectRootPath + CodeGenerateConfig.config.ServiceRelativePath));
+
+}
+
+const ProjectRootPath = CodeGenerateConfig.config.ProjectRootPath;
+const ServerProjectRootPath = CodeGenerateConfig.config.ServerRootPath;
+const Model = CodeGenerateConfig.model;
+
+gulp.task('code', function () {
+
+  if (CodeGenerateConfig.config.Web) {
+    BuildWeb();
+  }
+  //server
+  if (CodeGenerateConfig.config.Server) {
+    BuildServer();
+  }
 
 });
