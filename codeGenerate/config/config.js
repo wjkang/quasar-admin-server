@@ -3,6 +3,7 @@ export default {
     ServerRootPath:'C:/quasar-admin-server',
 
     Web:true,
+    WebNoEdit:true,//编辑框自定义，不使用json驱动
     Server:false,
 
     //web

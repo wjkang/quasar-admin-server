@@ -1,3 +1,11 @@
+<% if config.WebNoEdit %>
+import searchSchema from './searchSchema';
+import searchUiSchema from './searchUiSchema';
+export default {
+    searchSchema,
+    searchUiSchema
+}
+<% else %>
 import searchSchema from './searchSchema';
 import searchUiSchema from './searchUiSchema';
 import editSchema from './editSchema';
@@ -8,3 +16,4 @@ export default {
     editSchema,
     editUiSchema
 }
+<% endif %>
